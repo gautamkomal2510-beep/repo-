@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fashion Survey</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #87CEEB, #0b2d4d);
+            min-height: 100vh;
+            color: #17212b;
+        }
+
+        /* HEADER */
+
+        header {
+            background: white;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #0b2d4d;
+        }
+
+        .logo span {
+            color: #38a9d6;
+        }
+
+        header p {
+            color: #0b2d4d;
+            font-weight: bold;
+        }
+
+        /* MAIN */
+
+        main {
+            min-height: calc(100vh - 80px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            background: white;
+            width: 100%;
+            max-width: 750px;
+            border-radius: 25px;
+            padding: 45px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        /* INTRO */
+
+        #intro {
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e1f5fc;
+            color: #0b2d4d;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 48px;
+            color: #0b2d4d;
+            margin-bottom: 20px;
+        }
+
+        h1 span {
+            color: #2b9bc5;
+        }
+
+        .intro-text {
+            color: #5d6d77;
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .info {
+            color: #0b2d4d;
+            font-weight: bold;
+            margin: 25px 0;
+        }
+
+        /* BUTTON */
+
+        button {
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 12px;
+            padding: 15px 28px;
+            transition: 0.3s;
+        }
+
+        .start-btn,
+        .next-btn {
+            background: #0b2d4d;
+            color: white;
+        }
+
+        .start-btn:hover,
+        .next-btn:hover {
+            background: #174b73;
+            transform: translateY(-2px);
+        }
+
+        .back-btn {
+            background: #e6f6fb;
+            color: #0b2d4d;
+        }
+
+        .back-btn:hover {
+            background: #d1edf6;
+        }
+
+        /* SURVEY */
+
+        #survey {
+            display: none;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            color: #0b2d4d;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .progress {
+            width: 100%;
+            height: 9px;
+            background: #e3eef2;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 35px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 10%;
+            background: linear-gradient(90deg, #0b2d4d, #55c8ee);
+            transition: 0.3s;
+        }
+
+        .question-number {
+            color: #2b9bc5;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 30px;
+            color: #0b2d4d;
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
+
+        /* INPUT */
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #d9e8ee;
+            border-radius: 12px;
+            font-size: 16px;
+            outline: none;
+            font-family: Arial, sans-serif;
+        }
+
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #35a9d6;
+            box-shadow: 0 0 0 4px rgba(53,169,214,0.1);
+        }
+
+        /* OPTIONS */
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 17px;
+            border: 2px solid #dce9ee;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            background: white;
+            font-weight: bold;
+        }
+
+        .option:hover {
+            border-color: #87CEEB;
+            background: #f3fbfe;
+        }
+
+        .option.selected {
+            border-color: #0b2d4d;
+            background: #e7f7fc;
+            color: #0b2d4d;
+        }
+
+        /* COLORS */
+
+        .colors {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .color {
+            border: 2px solid #dce9ee;
+            padding: 12px 5px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .color.selected {
+            border-color: #0b2d4d;
+            background: #e7f7fc;
+        }
+
+        .circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: auto auto 8px;
+            border: 1px solid #aaa;
+        }
+
+        /* ERROR */
+
+        .error {
+            color: #d62828;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 15px;
+            min-height: 20px;
+        }
+
+        /* NAVIGATION */
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        /* THANK YOU */
+
+        #thankyou {
+            display: none;
+            text-align: center;
+        }
+
+        .check {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #dff5fc;
+            color: #0b2d4d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            margin: auto auto 25px;
+        }
+
+        #thankyou h2 {
+            font-size: 40px;
+            color: #0b2d4d;
+            margin-bottom: 20px;
+        }
+
+        #thankyou p {
+            color: #62737e;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 16px 5%;
+            }
+
+            header p {
+                font-size: 12px;
+            }
+
+            .container {
+                padding: 28px 20px;
+            }
+
+            h1 {
+                font-size: 38px;
+            }
+
+            .question {
+                font-size: 25px;
+            }
+
+            .options {
+                grid-template-columns: 1fr;
+            }
+
+            .colors {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .navigation {
+                gap: 10px;
+            }
+
+            .navigation button {
+                width: 50%;
+            }
+
+            #thankyou h2 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        FASHION <span>INSIGHTS</span>
+    </div>
+
+    <p>10 Question Survey</p>
+</header>
+
+
+<main>
+
+    <div class="container">
+
+        <!-- INTRODUCTION -->
+
+        <section id="intro">
+
+            <div class="badge">
+                YOUR OPINION MATTERS
+            </div>
+
+            <h1>
+                Help Us Shape the
+                <span>Future of Fashion</span>
+            </h1>
+
+            <p class="intro-text">
+                We are building a new clothing brand focused on
+                understanding what people truly want from their clothes.
+                Your preferences, ideas, and experiences will help us
+                design fashion that is more comfortable, practical,
+                stylish, and meaningful.
+            </p>
+
+            <p class="intro-text">
+                This short survey contains 10 questions and takes only
+                a few minutes to complete.
+            </p>
+
+            <div class="info">
+                10 Questions &nbsp; • &nbsp; 2–3 Minutes
+            </div>
+
+            <button class="start-btn" onclick="startSurvey()">
+                Start Survey →
+            </button>
+
+        </section>
+
+
+        <!-- SURVEY -->
+
+        <section id="survey">
+
+            <div class="progress-info">
+                <span id="questionNumber">
+                    Question 1 of 10
+                </span>
+
+                <span id="percent">
+                    10%
+                </span>
+            </div>
+
+            <div class="progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <div id="questionArea"></div>
+
+            <div class="error" id="error"></div>
+
+            <div class="navigation">
+
+                <button
+                    class="back-btn"
+                    id="backButton"
+                    onclick="previousQuestion()">
+                    ← Previous
+                </button>
+
+                <button
+                    class="next-btn"
+                    id="nextButton"
+                    onclick="nextQuestion()">
+                    Next →
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- THANK YOU -->
+
+        <section id="thankyou">
+
+            <div class="check">
+                ✓
+            </div>
+
+            <h2>
+                Thank You! 💙
+            </h2>
+
+            <p>
+                Thank you for sharing your thoughts with us.
+            </p>
+
+            <p>
+                Your answers will help us understand what people
+                really want from modern fashion and help us create
+                clothing designed around real people and their needs.
+            </p>
+
+            <p>
+                <strong>
+                    Your feedback matters. Together, we can shape
+                    the future of fashion.
+                </strong>
+            </p>
+
+            <button
+                class="start-btn"
+                onclick="restartSurvey()">
+                Start Again
+            </button>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<script>
+
+    /* ============================
+       QUESTIONS
+    ============================ */
+
+    const questions = [
+
+        {
+            question: "Who is your favorite fashion designer?",
+            type: "text",
+            placeholder: "Enter designer's name"
+        },
+
+        {
+            question: "What is your age?",
+            type: "number",
+            placeholder: "Enter your age"
+        },
+
+        {
+            question: "What does your dream outfit look like?",
+            type: "textarea",
+            placeholder: "Tell us about your dream outfit..."
+        },
+
+        {
+            question: "Who or what inspires your fashion choices?",
+            type: "textarea",
+            placeholder: "Tell us about your inspiration..."
+        },
+
+        {
+            question: "What is the biggest problem you want your clothes to solve?",
+            type: "textarea",
+            placeholder: "For example: comfort, price, fitting, quality, style..."
+        },
+
+        {
+            question: "What is your preferred price range for an outfit?",
+            type: "single",
+            options: [
+                "Under ₹1,000",
+                "₹1,000 – ₹2,500",
+                "₹2,500 – ₹5,000",
+                "₹5,000 – ₹10,000",
+                "Above ₹10,000"
+            ]
+        },
+
+        {
+            question: "What type of clothing do you feel most comfortable wearing?",
+            type: "multiple",
+            options: [
+                "T-Shirts",
+                "Shirts",
+                "Jeans",
+                "Trousers",
+                "Dresses",
+                "Kurtis",
+                "Sarees",
+                "Hoodies",
+                "Casual Wear",
+                "Traditional Wear",
+                "Other"
+            ]
+        },
+
+        {
+            question: "Which fabric do you find most comfortable?",
+            type: "multiple",
+            options: [
+                "Cotton",
+                "Linen",
+                "Denim",
+                "Silk",
+                "Rayon",
+                "Wool",
+                "Polyester",
+                "Khadi",
+                "Other"
+            ]
+        },
+
+        {
+            question: "What is your gender?",
+            type: "single",
+            options: [
+                "Male",
+                "Female",
+                "Other",
+                "Prefer not to say"
+            ]
+        },
+
+        {
+            question: "What is your favorite color?",
+            type: "color",
+            options: [
+                ["Black", "#000000"],
+                ["White", "#ffffff"],
+                ["Blue", "#246BCE"],
+                ["Sky Blue", "#87CEEB"],
+                ["Red", "#E53935"],
+                ["Green", "#43A047"],
+                ["Yellow", "#FDD835"],
+                ["Pink", "#EC407A"],
+                ["Purple", "#8E44AD"],
+                ["Brown", "#795548"],
+                ["Grey", "#78909C"],
+                ["Orange", "#FB8C00"]
+            ]
+        }
+
+    ];
+
+
+    /* ============================
+       VARIABLES
+    ============================ */
+
+    let current = 0;
+
+    let answers = [];
+
+
+    /* ============================
+       START
+    ============================ */
+
+    function startSurvey() {
+
+        document.getElementById("intro").style.display = "none";
+
+        document.getElementById("survey").style.display = "block";
+
+        current = 0;
+
+        answers = [];
+
+        showQuestion();
+
+    }
+
+
+    /* ============================
+       SHOW QUESTION
+    ============================ */
+
+    function showQuestion() {
+
+        const q = questions[current];
+
+        const area =
+            document.getElementById("questionArea");
+
+        area.innerHTML = "";
+
+        document.getElementById("questionNumber")
+            .innerText =
+            "Question " + (current + 1) +
+            " of " + questions.length;
+
+        const percentage =
+            ((current + 1) / questions.length) * 100;
+
+        document.getElementById("percent")
+            .innerText =
+            percentage + "%";
+
+        document.getElementById("progressBar")
+            .style.width =
+            percentage + "%";
+
+
+        /* QUESTION TITLE */
+
+        const title =
+            document.createElement("h2");
+
+        title.className = "question";
+
+        title.innerText = q.question;
+
+        area.appendChild(title);
+
+
+        /* TEXT */
+
+        if (q.type === "text") {
+
+            const input =
+                document.createElement("input");
+
+            input.type = "text";
+
+            input.placeholder =
+                q.placeholder;
+
+            input.id = "answer";
+
+            area.appendChild(input);
+        }
+
+
+        /* NUMBER */
+
+        if (q.type === "number") {
+
+            const input =
+                document.createElement("input");
+
+            input.type = "number";
+
+            input.placeholder =
+                q.placeholder;
+
+            input.min = 10;
+            input.max = 100;
+
+            input.id = "answer";
+
+            area.appendChild(input);
+        }
+
+
+        /* TEXTAREA */
+
+        if (q.type === "textarea") {
+
+            const textarea =
+                document.createElement("textarea");
+
+            textarea.placeholder =
+                q.placeholder;
+
+            textarea.id = "answer";
+
+            area.appendChild(textarea);
+        }
+
+
+        /* SINGLE / MULTIPLE */
+
+        if (
+            q.type === "single" ||
+            q.type === "multiple"
+        ) {
+
+            const options =
+                document.createElement("div");
+
+            options.className = "options";
+
+
+            q.options.forEach(function(option) {
+
+                const div =
+                    document.createElement("div");
+
+                div.className = "option";
+
+                div.innerText = option;
+
+
+                div.onclick = function() {
+
+                    if (q.type === "single") {
+
+                        document
+                            .querySelectorAll(".option")
+                            .forEach(function(item) {
+                                item.classList.remove("selected");
+                            });
+
+                        div.classList.add("selected");
+
+                    } else {
+
+                        div.classList.toggle("selected");
+
+                    }
+
+                };
+
+
+                options.appendChild(div);
+
+            });
+
+
+            area.appendChild(options);
+        }
+
+
+        /* COLORS */
+
+        if (q.type === "color") {
+
+            const colors =
+                document.createElement("div");
+
+            colors.className = "colors";
+
+
+            q.options.forEach(function(item) {
+
+                const color =
+                    document.createElement("div");
+
+                color.className = "color";
+
+
+                const circle =
+                    document.createElement("div");
+
+                circle.className = "circle";
+
+                circle.style.background =
+                    item[1];
+
+
+                const name =
+                    document.createElement("div");
+
+                name.innerText =
+                    item[0];
+
+
+                color.appendChild(circle);
+
+                color.appendChild(name);
+
+
+                color.onclick = function() {
+
+                    document
+                        .querySelectorAll(".color")
+                        .forEach(function(c) {
+                            c.classList.remove("selected");
+                        });
+
+                    color.classList.add("selected");
+
+                };
+
+
+                colors.appendChild(color);
+
+            });
+
+
+            area.appendChild(colors);
+
+        }
+
+
+        /* PREVIOUS BUTTON */
+
+        if (current === 0) {
+
+            document.getElementById("backButton")
+                .style.visibility = "hidden";
+
+        } else {
+
+            document.getElementById("backButton")
+                .style.visibility = "visible";
+
+        }
+
+
+        /* NEXT BUTTON */
+
+        if (current === questions.length - 1) {
+
+            document.getElementById("nextButton")
+                .innerText = "Submit Survey ✓";
+
+        } else {
+
+            document.getElementById("nextButton")
+                .innerText = "Next →";
+
+        }
+
+
+        document.getElementById("error")
+            .innerText = "";
+
+    }
+
+
+    /* ============================
+       GET ANSWER
+    ============================ */
+
+    function getAnswer() {
+
+        const q = questions[current];
+
+
+        /* TEXT */
+
+        if (
+            q.type === "text" ||
+            q.type === "number" ||
+            q.type === "textarea"
+        ) {
+
+            const input =
+                document.getElementById("answer");
+
+            return input.value.trim();
+
+        }
+
+
+        /* SINGLE */
+
+        if (q.type === "single") {
+
+            const selected =
+                document.querySelector(".option.selected");
+
+            if (!selected) {
+                return "";
+            }
+
+            return selected.innerText;
+
+        }
+
+
+        /* MULTIPLE */
+
+        if (q.type === "multiple") {
+
+            const selected =
+                document.querySelectorAll(".option.selected");
+
+            return Array.from(selected)
+                .map(function(item) {
+                    return item.innerText;
+                });
+
+        }
+
+
+        /* COLOR */
+
+        if (q.type === "color") {
+
+            const selected =
+                document.querySelector(".color.selected");
+
+            if (!selected) {
+                return "";
+            }
+
+            return selected.innerText;
+
+        }
+
+    }
+
+
+    /* ============================
+       VALIDATION
+    ============================ */
+
+    function validate(answer) {
+
+        const q = questions[current];
+
+        const error =
+            document.getElementById("error");
+
+
+        if (q.type === "multiple") {
+
+            if (answer.length === 0) {
+
+                error.innerText =
+                    "Please select at least one option.";
+
+                return false;
+            }
+
+        } else {
+
+            if (!answer) {
+
+                error.innerText =
+                    "Please answer this question.";
+
+                return false;
+            }
+
+        }
+
+
+        /* AGE */
+
+        if (q.type === "number") {
+
+            const age = Number(answer);
+
+            if (age < 10 || age > 100) {
+
+                error.innerText =
+                    "Please enter an age between 10 and 100.";
+
+                return false;
+            }
+
+        }
+
+
+        error.innerText = "";
+
+        return true;
+
+    }
+
+
+    /* ============================
+       NEXT
+    ============================ */
+
+    function nextQuestion() {
+
+        const answer = getAnswer();
+
+        if (!validate(answer)) {
+            return;
+        }
+
+        answers[current] = answer;
+
+
+        if (current < questions.length - 1) {
+
+            current++;
+
+            showQuestion();
+
+        } else {
+
+            submitSurvey();
+
+        }
+
+    }
+
+
+    /* ============================
+       PREVIOUS
+    ============================ */
+
+    function previousQuestion() {
+
+        if (current > 0) {
+
+            current--;
+
+            showQuestion();
+
+        }
+
+    }
+
+
+    /* ============================
+       SUBMIT
+    ============================ */
+
+    function submitSurvey() {
+
+        console.log("Survey completed!");
+
+        console.log("Answers:");
+
+        console.log(answers);
+
+
+        document.getElementById("survey")
+            .style.display = "none";
+
+        document.getElementById("thankyou")
+            .style.display = "block";
+
+    }
+
+
+    /* ============================
+       RESTART
+    ============================ */
+
+    function restartSurvey() {
+
+        current = 0;
+
+        answers = [];
+
+
+        document.getElementById("thankyou")
+            .style.display = "none";
+
+        document.getElementById("survey")
+            .style.display = "block";
+
+
+        showQuestion();
+
+    }
+
+</script>
+
+</body>
+</html>
